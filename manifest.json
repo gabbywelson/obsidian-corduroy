@@ -1,7 +1,7 @@
 {
   "id": "corduroy",
   "name": "Corduroy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minAppVersion": "1.11.4",
   "description": "Search Google Maps and insert place coordinates into note frontmatter.",
   "author": "Gabby Welson",
