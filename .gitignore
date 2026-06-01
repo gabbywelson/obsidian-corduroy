@@ -9,6 +9,9 @@ dist
 # obsidian plugin build output
 main.js
 
+# obsidian plugin runtime settings (written into the plugin folder per-vault)
+data.json
+
 # code coverage
 coverage
 *.lcov
