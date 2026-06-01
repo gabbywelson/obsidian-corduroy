@@ -6,6 +6,9 @@ out
 dist
 *.tgz
 
+# obsidian plugin build output
+main.js
+
 # code coverage
 coverage
 *.lcov

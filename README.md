@@ -1,15 +1,35 @@
-# obsidian-corduroy
+# Corduroy
 
-To install dependencies:
+An [Obsidian](https://obsidian.md) plugin.
+
+## Development
+
+Install dependencies:
 
 ```bash
 bun install
 ```
 
-To run:
+Build `main.js` once:
 
 ```bash
-bun run index.ts
+bun run build
 ```
 
-This project was created using `bun init` in bun v1.3.10. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+Watch and rebuild on change:
+
+```bash
+bun run dev
+```
+
+Type-check without emitting:
+
+```bash
+bun run typecheck
+```
+
+## Installing into a vault
+
+Obsidian loads a plugin from `<vault>/.obsidian/plugins/corduroy/`. Copy (or
+symlink) `manifest.json`, `main.js`, and `styles.css` there, then enable
+**Corduroy** under Settings → Community plugins.

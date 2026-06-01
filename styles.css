@@ -1,0 +1,10 @@
+/* Styles for the Corduroy plugin. */
+
+.corduroy-suggestion-title {
+	font-weight: var(--font-medium);
+}
+
+.corduroy-suggestion-note {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
