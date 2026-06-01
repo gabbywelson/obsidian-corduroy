@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "bun build.ts --watch",
     "build": "bun build.ts production",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "release": "bun release.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
