@@ -9,9 +9,11 @@
  *   bun run release 1.4.2        # explicit version
  *
  * It bumps the version in manifest.json, package.json and versions.json,
- * rebuilds main.js, commits + pushes, then creates a GitHub release tagged with
- * the bare version (no leading "v") with main.js, manifest.json and styles.css
- * attached — exactly what Obsidian's installer expects.
+ * verifies the build, then commits and pushes a bare semver tag (no leading
+ * "v"). Pushing that tag triggers .github/workflows/release.yml, which builds
+ * the plugin in CI, attaches a provenance attestation, and publishes the GitHub
+ * release with main.js, manifest.json and styles.css — exactly what Obsidian's
+ * installer expects.
  */
 import { $ } from "bun";
 
@@ -29,7 +31,7 @@ function bumpVersion(current: string, bump: Bump): string {
 	if (parts.length !== 3 || parts.some(Number.isNaN)) {
 		fail(`Current version "${current}" is not valid semver (x.y.z).`);
 	}
-	let [major, minor, patch] = parts as [number, number, number];
+	const [major, minor, patch] = parts as [number, number, number];
 	if (bump === "major") return `${major + 1}.0.0`;
 	if (bump === "minor") return `${major}.${minor + 1}.0`;
 	return `${major}.${minor}.${patch + 1}`;
@@ -86,8 +88,8 @@ await writeJson("manifest.json", manifest);
 await writeJson("package.json", pkg);
 await writeJson("versions.json", versions);
 
-// 2. Build the production bundle.
-console.log("Building…");
+// 2. Verify the build locally before tagging (CI rebuilds the published asset).
+console.log("Verifying build…");
 await $`bun run build`;
 
 // 3. Commit + push the version bump.
@@ -96,8 +98,9 @@ await $`git add manifest.json package.json versions.json`;
 await $`git commit -m ${`Release ${newVersion}`} -m "Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>"`;
 await $`git push origin HEAD`;
 
-// 4. Create the GitHub release with the assets Obsidian installs.
-console.log("Creating GitHub release…");
-await $`gh release create ${newVersion} main.js manifest.json styles.css --title ${newVersion} --target main --generate-notes`;
+// 4. Push the tag — this triggers the release workflow that builds, attests, and publishes.
+console.log("Tagging…");
+await $`git tag -a ${newVersion} -m ${`Release ${newVersion}`}`;
+await $`git push origin ${newVersion}`;
 
-console.log(`\n✔ Released ${newVersion}.`);
+console.log(`\n✔ Pushed tag ${newVersion}. GitHub Actions will build, attest, and publish the release.`);

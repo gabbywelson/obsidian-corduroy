@@ -1,4 +1,4 @@
-import builtins from "builtin-modules";
+import { builtinModules } from "node:module";
 
 const prod = process.argv.includes("production");
 const watch = process.argv.includes("--watch");
@@ -23,7 +23,8 @@ const external = [
 	"@lezer/common",
 	"@lezer/highlight",
 	"@lezer/lr",
-	...builtins,
+	...builtinModules,
+	...builtinModules.map((m) => `node:${m}`),
 ];
 
 async function build() {
