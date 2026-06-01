@@ -4,6 +4,8 @@
   "module": "main.ts",
   "type": "module",
   "private": true,
+  "license": "MIT",
+  "author": "Gabby Welson",
   "scripts": {
     "dev": "bun build.ts --watch",
     "build": "bun build.ts production",

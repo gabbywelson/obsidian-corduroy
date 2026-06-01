@@ -119,4 +119,4 @@ artifact, the latter is per-vault runtime settings.
 
 ## License
 
-No license has been chosen yet. Until one is added, default copyright applies.
+[MIT](LICENSE)
